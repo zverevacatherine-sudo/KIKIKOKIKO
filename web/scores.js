@@ -95,12 +95,12 @@ class Scores {
 
     _draw_win_text() {
         this.ctx.fillStyle = "white";
-        this.ctx.font = "40px Optima, Arial";
+        this.ctx.font = "40px Comicsansms, Arial";
         this.ctx.textAlign = "left";
-        this.ctx.fillText("Mission completed! You successfully reached AIity", 225, 330);
+        this.ctx.fillText("Mission completed! You successfully reached AIity", 130, 330);
         
-        this.ctx.font = "30px Optima, Arial";
-        this.ctx.fillText(`with a score of: ${this.total_correct_answers} / ${this.max_answers}`, 225, 400);
+        this.ctx.font = "30px Comicsansms, Arial";
+        this.ctx.fillText(`with a score of: ${this.total_correct_answers} / ${this.max_answers}`, 130, 400);
     }
 
     draw_restart_button() {
