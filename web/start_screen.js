@@ -54,7 +54,7 @@ class StartScreen {
             this.ctx.stroke();
             
             this.ctx.fillStyle = "white";
-            this.ctx.font = "44px Optima, Arial";
+            this.ctx.font = "44px Comicsansms, Arial";
             this.ctx.textAlign = "center";
             this.ctx.fillText("Start", this.btn_start.x + this.btn_start.width / 2, this.btn_start.y + this.btn_start.height / 2 + 15);
         } else {
@@ -68,11 +68,11 @@ class StartScreen {
             this.ctx.stroke();
             
             this.ctx.fillStyle = "rgb(96, 96, 96)";
-            this.ctx.font = "44px Optima, Arial";
+            this.ctx.font = "44px Comicsansms, Arial";
             this.ctx.textAlign = "center";
             this.ctx.fillText("Start", this.btn_start.x + this.btn_start.width / 2, this.btn_start.y + this.btn_start.height / 2 - 5);
             
-            this.ctx.font = "24px Optima, Arial";
+            this.ctx.font = "24px Comicsansms, Arial";
             this.ctx.fillText("(Read the rules first)", this.btn_start.x + this.btn_start.width / 2, this.btn_start.y + this.btn_start.height / 2 + 30);
         }
 
@@ -87,7 +87,7 @@ class StartScreen {
         this.ctx.stroke();
         
         this.ctx.fillStyle = "white";
-        this.ctx.font = "44px Optima, Arial";
+        this.ctx.font = "44px Comicsansms, Arial";
         this.ctx.textAlign = "center";
         this.ctx.fillText("Assessment rules", this.btn_rules.x + this.btn_rules.width / 2, this.btn_rules.y + this.btn_rules.height / 2 + 15);
     }
