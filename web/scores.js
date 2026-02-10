@@ -66,7 +66,7 @@ class Scores {
         
         const count = this.completed_departments.size;
         this.ctx.fillStyle = "white";
-        this.ctx.font = "50px Optima, Arial";
+        this.ctx.font = "50px Comicsansms, Arial";
         this.ctx.textAlign = "left";
         this.ctx.drawImage(this.image_progress, 1000, 20);
         this.ctx.fillText(count.toString(), 1110, 70);
@@ -88,7 +88,7 @@ class Scores {
 
     _draw_lose_text() {
         this.ctx.fillStyle = "white";
-        this.ctx.font = "50px Optima, Arial";
+        this.ctx.font = "50px Comicsansms, Arial";
         this.ctx.textAlign = "left";
         this.ctx.fillText("You were not cautious enough", 275, 330);
     }
@@ -119,7 +119,7 @@ class Scores {
         
         // Button text
         this.ctx.fillStyle = "white";
-        this.ctx.font = "40px Optima, Arial";
+        this.ctx.font = "40px Comicsansms, Arial";
         this.ctx.textAlign = "center";
         this.ctx.fillText("Start from beginning", this.restart_rect.x + this.restart_rect.width / 2, this.restart_rect.y + this.restart_rect.height / 2 + 15);
     }
