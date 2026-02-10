@@ -36,7 +36,7 @@ class Quiz {
 
         while (i < words.length && lineIndex < 3) {
             const test = (lines[lineIndex] + ' ' + words[i]).trim();
-            const width = measureText(this.ctx, test, '28px Optima, Arial');
+            const width = measureText(this.ctx, test, '28px Comicsansms, Arial');
             if (width <= maxWidth) {
                 lines[lineIndex] = test;
                 i++;
@@ -46,7 +46,7 @@ class Quiz {
         }
 
         if (i < words.length) {
-            while (measureText(this.ctx, lines[2] + '...', '28px Optima, Arial') > maxWidth && lines[2].length > 0) {
+            while (measureText(this.ctx, lines[2] + '...', '28px Comicsansms, Arial') > maxWidth && lines[2].length > 0) {
                 lines[2] = lines[2].slice(0, -1).trim();
             }
             lines[2] = (lines[2] || '') + '...';
@@ -61,7 +61,7 @@ class Quiz {
 
         while (i < words.length) {
             const test = (line1 + ' ' + words[i]).trim();
-            const width = measureText(this.ctx, test, '22px Optima, Arial');
+            const width = measureText(this.ctx, test, '22px Comicsansms, Arial');
             if (width <= maxWidth) {
                 line1 = test;
                 i++;
@@ -73,7 +73,7 @@ class Quiz {
         let line2 = '';
         while (i < words.length) {
             const test = (line2 + ' ' + words[i]).trim();
-            const width = measureText(this.ctx, test, '22px Optima, Arial');
+            const width = measureText(this.ctx, test, '22px Comicsansms, Arial');
             if (width <= maxWidth) {
                 line2 = test;
                 i++;
@@ -83,7 +83,7 @@ class Quiz {
         }
 
         if (i < words.length) {
-            while (measureText(this.ctx, line2 + '...', '22px Optima, Arial') > maxWidth && line2.length > 0) {
+            while (measureText(this.ctx, line2 + '...', '22px Comicsansms, Arial') > maxWidth && line2.length > 0) {
                 line2 = line2.slice(0, -1).trim();
             }
             line2 += '...';
@@ -127,11 +127,11 @@ class Quiz {
         // Results screen
         if (this.question_index >= this.list_of_questions.length) {
             this.ctx.fillStyle = "white";
-            this.ctx.font = "28px Optima, Arial";
+            this.ctx.font = "28px Comicsansms, Arial";
             this.ctx.textAlign = "center";
             this.ctx.fillText(`${this.department_title} - RESULTS`, CONFIG.WIDTH / 2, CONFIG.HEIGHT / 2 - 60);
 
-            this.ctx.font = "26px Optima, Arial";
+            this.ctx.font = "26px Comicsansms, Arial";
             this.ctx.fillText(`Correct: ${this.correct_answered_q} / ${this.list_of_questions.length}`, CONFIG.WIDTH / 2, CONFIG.HEIGHT / 2 + 10);
 
             // Continue button
@@ -145,7 +145,7 @@ class Quiz {
             this.ctx.stroke();
 
             this.ctx.fillStyle = "white";
-            this.ctx.font = "26px Optima, Arial";
+            this.ctx.font = "26px Comicsansms, Arial";
             this.ctx.fillText("Continue", CONFIG.WIDTH / 2, this.continue_rect.y + this.continue_rect.height / 2 + 10);
 
             return;
@@ -156,7 +156,7 @@ class Quiz {
 
         // Department title
         this.ctx.fillStyle = "white";
-        this.ctx.font = "22px Optima, Arial";
+        this.ctx.font = "22px Comicsansms, Arial";
         this.ctx.textAlign = "center";
         this.ctx.fillText(this.department_title, CONFIG.WIDTH / 2, 110);
 
@@ -164,7 +164,7 @@ class Quiz {
         const question_text = `Q${this.question_index + 1}/${this.list_of_questions.length}: ${q}`;
         const [q1, q2, q3] = this.wrap_to_three_lines(question_text, 1150);
 
-        this.ctx.font = "28px Optima, Arial";
+        this.ctx.font = "28px Comicsansms, Arial";
         this.ctx.fillText(q1, CONFIG.WIDTH / 2, 145);
         this.ctx.fillText(q2, CONFIG.WIDTH / 2, 175);
         this.ctx.fillText(q3, CONFIG.WIDTH / 2, 205);
@@ -193,7 +193,7 @@ class Quiz {
             // Draw answer text
             const [a1, a2] = this.wrap_answer_to_two_lines(answers[i], 1000);
             this.ctx.fillStyle = "black";
-            this.ctx.font = "22px Optima, Arial";
+            this.ctx.font = "22px Comicsansms, Arial";
             this.ctx.textAlign = "center";
 
             if (a2 === "") {
