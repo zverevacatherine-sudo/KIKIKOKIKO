@@ -297,7 +297,7 @@ class Game {
                 
                 // Pause text (как в Python: font.render("Pause! Press SPACE to continue", True, "white"))
                 this.ctx.fillStyle = "white";
-                this.ctx.font = "50px Optima, Arial";
+                this.ctx.font = "50px Comicsansms, Arial";
                 this.ctx.textAlign = "center";
                 this.ctx.fillText("Pause! Press SPACE to continue", CONFIG.WIDTH / 2, CONFIG.HEIGHT / 2);
                 
