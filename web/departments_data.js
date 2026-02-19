@@ -13,62 +13,22 @@ const Departments = [
                  "...randomized division into test and training data",
                  "...selection of the model",
                  "...abstraction of the model"
-             ], 0],
-
-            ["Which of the following statements best describes an LLM (Large Language Model)?",
-             [
-                 "It generates text by analyzing and summarizing large volumes of web content",
-                 "It generates text by predicting the next word based on the context of previous words",
-                 "It generates text by translating input text into multiple languages simultaneously",
-                 "It generates text by using pre-defined templates and filling in the blanks"
-             ], 1],
-
-            ["Which of the following tasks can Generative AI perform with a high degree of accuracy?",
-             [
-                 "Predicting stock market trends",
-                 "Making ethical decisions in complex scenarios",
-                 "Diagnosing rare diseases",
-                 "Generating human-like text based on prompts"
-             ], 3],
-
-            ["In the context of Generative AI, what is 'zero-shot learning'?",
-             [
-                 "Training a model without any data",
-                 "The ability of a model to perform a task without any task-specific training",
-                 "A method of reducing the model's training time to zero",
-                 "A technique for generating synthetic training data"
-             ], 1],
-
-            ["Which of the following is a potential challenge when using prompt-based development for text generation?",
-             [
-                 "The language model can only generate binary outputs",
-                 "The need for extensive labelled data to train the model",
-                 "Crafting a prompt that accurately captures the desired context and nuances",
-                 "The requirement for complex feature engineering"
              ], 2],
 
-            ["What does the term 'token' refer to in the context of a large language model (LLM)?",
+            ["An AI technology is trained with labeled images to recognize whether a particular person is in an image or not. What happens in the training phase to improve the system when a false identification occurs?",
              [
-                 "A token is a unit of text, such as a word or a subword, that the model processes individually",
-                 "A token is a unique identifier assigned to each user interacting with the language model",
-                 "A token is a security measure used to authenticate API requests to the language model",
-                 "A token is a reward given to users for contributing valuable data to train the language model"
+                 "Strengthening or weakening the connections in the network",
+                 "Ask the algorithm to remember the image the AI technology misidentifies",
+                 "Delete the images",
+                 "Change the image's caption so that the AI technology no longer misidentifies it"
              ], 0],
 
-            ["Which of the following is NOT a requirement for an AI to be considered artificial general intelligence (AGI)?",
+            ["Which of the following processes does not use natural language processing (NLP) technologies?",
              [
-                 "The ability to learn and adapt to new tasks without human intervention",
-                 "The capability to perform tasks across various domains with human-like proficiency",
-                 "The ability to predict future events with perfect accuracy",
-                 "The capacity to understand and generate natural language"
-             ], 2],
-
-            ["How does RAG (Retrieval-Augmented Generation) enhance the capabilities of an LLM?",
-             [
-                 "By improving its grammar and syntax",
-                 "By providing it with real-time and relevant data",
-                 "By increasing its computational speed",
-                 "By enabling it to understand multiple languages"
+                 "Analysis of clinical text recordings",
+                 "Gesture-controlled robot",
+                 "Story generator",
+                 "Question and answer tool"
              ], 1],
         ]
     },
