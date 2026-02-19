@@ -2,17 +2,17 @@
 const Departments = [
     {
         id: "1",
-        title: "Authority 'Know & Understand'",
+        title: "Authority 'Apply'",
         image: "PICS/Departaments/D1.png",
         stop_x: 900,
         y: 120,
         questions: [
-            ["Which of the following best describes 'Generative AI'?",
+            ["How can humans influence the outcome of machine learning? Through…",
              [
-                 "AI that creates new content like text, images, or music by learning from existing data",
-                 "An AI system designed to enhance the speed and accuracy of data retrieval in search engines",
-                 "A form of artificial intelligence that focuses on translating languages in real-time",
-                 "AI technology used primarily for managing and organizing large databases"
+                 "...calculation of the accuracy of the prediction",
+                 "...randomized division into test and training data",
+                 "...selection of the model",
+                 "...abstraction of the model"
              ], 0],
 
             ["Which of the following statements best describes an LLM (Large Language Model)?",
