@@ -35,124 +35,100 @@ const Departments = [
 
     {
         id: "2",
-        title: "Authority 'Use & Apply'",
+        title: "Authority 'Create'",
         image: "PICS/Departaments/D2.png",
         stop_x: 900,
         y: 240,
         questions: [
-            ["When using generative AI to create a marketing pitch, which of the following strategies is least likely to be effective?",
+            ["The game statistics of a basketball team are to be used to predict how many games it will win in the current season. Which algorithm is best suited to make this prediction?",
              [
-                 "Supplying the AI with information about the target audience",
-                 "Asking the AI to include unique selling points and benefits",
-                 "Requesting the AI to use persuasive language techniques",
-                 "Providing the AI with a list of competitors' products"
-             ], 3],
-
-            ["After deploying a customer service chatbot, you notice that it frequently provides outdated information about company policies. What is the best course of action to address this issue?",
-             [
-                 "Implement a feedback loop where users can flag outdated information for review",
-                 "Schedule regular updates to the chatbot's training data to include the latest company policies",
-                 "Set up a system where complex or policy-related queries are escalated to human agents for accurate responses",
-                 "Conduct a comprehensive audit of the chatbot's performance metrics to identify areas for improvement"
+                 "Classification",
+                 "Regression",
+                 "Clustering",
+                 "Object detection"
              ], 1],
 
-            ["Suppose you have a large dataset of emails and you want to build an application to answer questions based on this dataset. Which of the following scenarios best illustrates the advantage of using RAG over prompting (i.e without RAG)?",
+            ["When we use machine learning techniques in a text recognition system:",
              [
-                 "You need to generate creative writing pieces based on the email content",
-                 "You want to ensure the model can answer questions even if it has never seen similar questions before",
-                 "You need to answer questions that require specific information from different parts of the email dataset",
-                 "You want to reduce the size of the language model to save computational resources"
-             ], 2],
+                 "We present the system with a series of sample texts, and after processing them, the system can recognize only texts that correspond exactly to these examples",
+                 "We give the system a series of example texts, and after processing, the system can recognize texts similar to these examples (i.e., it recognizes new texts that it has never seen before)",
+                 "We give the system a set of example texts; after processing, the system can recognize any text we give it",
+                 "We give the system a series of sample texts, and after processing them, the system can recognize any text, image, or sound we present to it"
+             ], 1],
+
+            ["In which of these areas is AI typically applied?",
+             [
+                 "Detecting credit card fraud",
+                 "Cryptocurrency mining",
+                 "Web tracking",
+                 "Encryption for instant messaging services"
+             ], 0],
         ]
     },
 
     {
         id: "3",
-        title: "Authority 'Evaluate & Create'",
+        title: "Authority 'Detect'",
         image: "PICS/Departaments/D3.png",
         stop_x: 900,
         y: 360,
         questions: [
-            ["As a student using a Large Language Model (LLM) to gather information for an assignment, how should you approach the information it provides?",
+            ["Which of these applications does NOT use AI?",
              [
-                 "The LLM's answers are always more trustworthy than any information you will find on the internet, so you can use them without further verification",
-                 "The LLM's answers are generally more trustworthy than internet sources, but you should still verify the information with other reliable sources",
-                 "The LLM's answers are not necessarily more trustworthy than internet sources, and you should cross-check the information with other credible references",
-                 "The LLM's answers are less trustworthy than internet sources because it relies on outdated information"
-             ], 2],
+                 "A medical system that analyzes patterns on tissue images to determine whether cancer is present",
+                 "A chatbot on a website that answers predefined questions",
+                 "Voice assistants recognize, understand, and respond to spoken language",
+                 "Face-lock function on cell phones to recognize and distinguish users' faces"
+             ], 1],
 
-            ["It is unlikely for an LLM to provide an accurate summary of the latest financial market trends in real-time. Is this statement true or false?",
+            ["How is AI already being used in urbanization issues today?",
              [
-                 "True, because the LLM's data may be outdated due to its knowledge cutoff",
-                 "True, because the LLM is not good at handling numbers and structured data",
-                 "False, because the LLM frequently updates its knowledge base",
-                 "False, because the LLM is capable of synthesizing the latest market data automatically"
-             ], 0],
-
-            ["A generative AI tool has provided a summary of a research paper. The summary states, \"The study found that increased screen time is directly correlated with decreased attention spans in children aged 8–12.\" What is your next step?",
-             [
-                 "Accept the summary as accurate because AI tools are generally reliable",
-                 "Ask the AI to provide more details about the study's methodology and results",
-                 "Cross-check the summary with the original research paper",
-                 "Use another AI tool to generate a summary for comparison and evaluate the consistency between both summaries"
-             ], 2],
-
-            ["While reviewing a video of a well-known public figure making controversial statements, which characteristic confirms the video was NOT generated by AI?",
-             [
-                 "The public figure's voice sounds like themselves",
-                 "The video has a professional and polished appearance",
-                 "The video is high-quality with smooth transitions",
-                 "None of the above"
+                 "Predictive maintenance forecast for water pipes",
+                 "Regulation of the housing market",
+                 "Optimized settlement strategy for inner cities",
+                 "Forecasting the volume of passengers on public transport"
              ], 3],
+
+            ["What characteristics differentiate AI from previous IT applications?",
+             [
+                 "Learning ability and independence",
+                 "Ability to process data and ease of use",
+                 "Speed and ability to process data",
+                 "Location-independent access and data security"
+             ], 0],
         ]
     },
 
     {
         id: "4",
-        title: "Authority 'Ethics'",
+        title: "Authority 'Generative AI'",
         image: "PICS/Departaments/D4.png",
         stop_x: 900,
         y: 480,
         questions: [
-            ["When a generative AI system is used for screening job applications, what issue might arise concerning the quality and fairness of hiring decisions?",
+            ["What does "generative" mean in the context of artificial intelligence?",
              [
-                 "The AI system might overlook applicants' unique achievements and extracurricular activities",
-                 "The AI system could misinterpret minor formatting differences in resumes",
-                 "The AI system might not effectively handle applications submitted in various languages",
-                 "The AI system could reinforce existing biases found in historical hiring data"
-             ], 3],
+                 "It refers to quickly retrieving existing content from a database",
+                 "It means that the AI can create new content on demand based on training data",
+                 "It describes the ability to collect data from the Internet in real-time",
+                 "It stands for the ability to summarize information from multiple sources"
+             ], 2],
 
-            ["In a healthcare startup, an accurate AI model recommends treatments, but doctors don't trust it because they can't understand how the model arrived at its conclusions. What core issue does this scenario illustrate?",
+            ["Hallucinations in AI models refer to nonsensical or grammatically incorrect words or sentences generated by the model. Which of the following factors is least likely to cause hallucinations?",
              [
-                 "The AI model uses obsolete training data",
-                 "The training dataset lacks sufficient diversity",
-                 "The treatment guidelines input are incorrect",
-                 "The AI model behaves as a black box"
-             ], 3],
-
-            ["What are the potential copyright implications for a journalist using an AI-generated image in a commercial article?",
-             [
-                 "The journalist needs to check the licensing policy of the AI tool they used",
-                 "The AI-generated image is automatically free to use without any restrictions",
-                 "The journalist must pay a standard licensing fee to use the AI-generated image",
-                 "The image cannot be used in any commercial context because it is AI-generated"
-             ], 0],
-
-            ["Should we impose restrictions on the outputs of generative AI technologies?",
-             [
-                 "Yes, to reduce the computational resources required for operating these technologies",
-                 "Yes, to prevent the dissemination of harmful or misleading content",
-                 "No, as it would hinder technological innovation and creativity",
-                 "No, because users should have the freedom to access all generated content"
+                 "The model is trained using noisy or erroneous data",
+                 "The model is trained with too much data",
+                 "The model is not trained with enough data",
+                 "The model is not given enough context"
              ], 1],
 
-            ["Sending personal information to cloud-based generative AI tools has little privacy concerns. Is this statement true or false?",
+            ["Which of the following strategies is NOT particularly helpful for recognizing whether a generative AI created a video?",
              [
-                 "True, as this information is encrypted using sophisticated algorithms during the transmission process",
-                 "True, as generative AI tools are black-box systems and cannot output personal information even if it is used for model training",
-                 "False, as generative AI tools can train on unencrypted data and can output private information based on their probabilistic nature",
-                 "False, as advancements in quantum computing can easily decipher the encrypted data"
-             ], 2],
+                 "Check that the color palette in the video remains consistent across different scenes, as AI-generated videos sometimes have color variations",
+                 "Pay attention to object permanence to check whether objects that move out of the field of view reappear when the camera pans back",
+                 "Check the movements of people and objects in the video for logical consistency to ensure that they comply with the laws of physics",
+                 "Watch the video several times and pay attention to different details to notice possible errors"
+             ], 0],
         ]
     },
 ];
