@@ -134,7 +134,7 @@ const Departments = [
 {
         id: "5",
         title: "Authority 'Understanding AI'",
-        image: "PICS/Departaments/D4.png",
+        image: "PICS/Departaments/D5.png",
         stop_x: 900,
         y: 480,
         questions: [
