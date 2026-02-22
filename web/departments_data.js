@@ -2,10 +2,10 @@
 const Departments = [
     {
         id: "1",
-        title: "Authority 'Apply'",
+        title: "Authority 'Apply AI'",
         image: "PICS/Departaments/D1.png",
         stop_x: 900,
-        y: 100,
+        y: 500,
         questions: [
             ["How can humans influence the outcome of machine learning? Through…",
              [
@@ -35,10 +35,10 @@ const Departments = [
 
     {
         id: "2",
-        title: "Authority 'Create'",
+        title: "Authority 'Create AI'",
         image: "PICS/Departaments/D2.png",
         stop_x: 900,
-        y: 150,
+        y: 200,
         questions: [
             ["The game statistics of a basketball team are to be used to predict how many games it will win in the current season. Which algorithm is best suited to make this prediction?",
              [
@@ -68,10 +68,10 @@ const Departments = [
 
     {
         id: "3",
-        title: "Authority 'Detect'",
+        title: "Authority 'Detect AI'",
         image: "PICS/Departaments/D3.png",
         stop_x: 900,
-        y: 200,
+        y: 300,
         questions: [
             ["Which of these applications does NOT use AI?",
              [
@@ -136,7 +136,7 @@ const Departments = [
         title: "Authority 'Understanding AI'",
         image: "PICS/Departaments/D5.png",
         stop_x: 900,
-        y: 300,
+        y: 100,
         questions: [
             ["How does a recommendation system of a streaming service based on AI work?",
              [
