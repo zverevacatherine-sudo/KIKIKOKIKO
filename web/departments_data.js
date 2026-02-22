@@ -38,7 +38,7 @@ const Departments = [
         title: "Authority 'Create'",
         image: "PICS/Departaments/D2.png",
         stop_x: 900,
-        y: 200,
+        y: 150,
         questions: [
             ["The game statistics of a basketball team are to be used to predict how many games it will win in the current season. Which algorithm is best suited to make this prediction?",
              [
@@ -71,7 +71,7 @@ const Departments = [
         title: "Authority 'Detect'",
         image: "PICS/Departaments/D3.png",
         stop_x: 900,
-        y: 300,
+        y: 200,
         questions: [
             ["Which of these applications does NOT use AI?",
              [
@@ -104,7 +104,7 @@ const Departments = [
         title: "Authority 'Generative AI'",
         image: "PICS/Departaments/D4.png",
         stop_x: 900,
-        y: 400,
+        y: 250,
         questions: [
             ["What does \"generative\" mean in the context of artificial intelligence?",
              [
@@ -136,7 +136,7 @@ const Departments = [
         title: "Authority 'Understanding AI'",
         image: "PICS/Departaments/D5.png",
         stop_x: 900,
-        y: 500,
+        y: 300,
         questions: [
             ["How does a recommendation system of a streaming service based on AI work?",
              [
