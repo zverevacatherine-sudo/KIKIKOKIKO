@@ -5,7 +5,7 @@ const Departments = [
         title: "Authority 'Apply AI'",
         image: "PICS/Departaments/D1.png",
         stop_x: 900,
-        y: 500,
+        y: 100,
         questions: [
             ["How can humans influence the outcome of machine learning? Through…",
              [
@@ -104,7 +104,7 @@ const Departments = [
         title: "Authority 'Generative AI'",
         image: "PICS/Departaments/D4.png",
         stop_x: 900,
-        y: 250,
+        y: 400,
         questions: [
             ["What does \"generative\" mean in the context of artificial intelligence?",
              [
@@ -136,7 +136,7 @@ const Departments = [
         title: "Authority 'Understanding AI'",
         image: "PICS/Departaments/D5.png",
         stop_x: 900,
-        y: 100,
+        y: 450,
         questions: [
             ["How does a recommendation system of a streaming service based on AI work?",
              [
