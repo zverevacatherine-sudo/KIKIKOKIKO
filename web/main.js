@@ -13,6 +13,8 @@ class Game {
         
         this.canvas = document.getElementById('gameCanvas');
         this.ctx = this.canvas.getContext('2d');
+        this.canvas.width = CONFIG.WIDTH;
+        this.canvas.height = CONFIG.HEIGHT;
         this.canvas.focus();
         
         // Game state
@@ -125,15 +127,14 @@ class Game {
                 this.state = "menu";
             }
         } else if (this.state === "game") {
-            if (this.scores.game_over) {
-                if (this.scores.restart_clicked(x, y)) {
+            if (this.scores.restart_clicked(scaledX, scaledY)) {
                     this.restart_run_keep_departments();
                 }
                 return;
             }
             
             if (this.test_screen.quiz_active) {
-                const result = this.test_screen.handle_click(x, y);
+                const result = this.test_screen.handle_click(scaledX, scaledY);
                 if (result === "finished" && this.active_house) {
                     this.scores.add_department_score(this.test_screen.get_score());
                     this.scores.completed_departments.add(this.active_house.dept_id);
@@ -149,7 +150,7 @@ class Game {
                 }
             } else {
                 if (!this.scores.to_planet) {
-                    const dept = this.clicked_department(x, y);
+                    const dept = this.clicked_department(scaledX, scaledY);
                     if (dept) {
                         const dept_data = Departments.find(d => d.id === dept.dept_id);
                         if (dept_data) {
@@ -231,21 +232,24 @@ class Game {
         }
         
         // Find next uncompleted department
-        for (const d of Departments) {
-            if (!this.scores.completed_departments.has(d.id)) {
-                this.departments.push(new Border(d.stop_x, d.image, d.id, d.title, d.y));
-                
-                // Schedule next department
-                this.eventsManager.Department_fly_in = setTimeout(() => {
-                    if (this.state === 'game' && !this.scores.to_planet) {
-                        this.spawnDepartment();
-                    }
-                }, this.eventsManager.Departments_between_time_distance);
-                return;
-            }
-        }
-    }
+    for (const d of Departments) {
+    if (!this.scores.completed_departments.has(d.id)) {
+        this.departments.push(new Border(d.stop_x, d.image, d.id, d.title, d.y));
 
+        // Schedule next department (prevent stacked timers)
+        if (this.eventsManager.Department_fly_in) {
+            clearTimeout(this.eventsManager.Department_fly_in);
+        }
+
+        this.eventsManager.Department_fly_in = setTimeout(() => {
+            if (this.state === 'game' && !this.scores.to_planet) {
+                this.spawnDepartment();
+            }
+        }, this.eventsManager.Departments_between_time_distance);
+
+        return;
+    }
+}
     spawnPlanet() {
         if (this.planets.length === 0) {
             this.planets.push(new Planet());
