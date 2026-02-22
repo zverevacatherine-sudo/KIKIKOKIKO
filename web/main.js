@@ -286,12 +286,14 @@ class Game {
         // Freeze the game until SPACE is pressed again
         this.paused = true;
         this.soundManager.pauseMusic();
+        this.eventsManager.pause_timers();
 
         const handleKeyDown = (e) => {
             if (e.key === ' ') {
                 e.preventDefault();
                 this.paused = false;
                 this.soundManager.resumeMusic();
+                this.eventsManager.resume_after_quiz(this.scores);
                 document.removeEventListener('keydown', handleKeyDown);
             }
         };
