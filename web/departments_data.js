@@ -106,7 +106,7 @@ const Departments = [
         stop_x: 900,
         y: 480,
         questions: [
-            ["What does "generative" mean in the context of artificial intelligence?",
+            ["What does \"generative\" mean in the context of artificial intelligence?",
              [
                  "It refers to quickly retrieving existing content from a database",
                  "It means that the AI can create new content on demand based on training data",
