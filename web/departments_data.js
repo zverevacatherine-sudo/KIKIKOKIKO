@@ -5,7 +5,7 @@ const Departments = [
         title: "Authority 'Apply'",
         image: "PICS/Departaments/D1.png",
         stop_x: 900,
-        y: 120,
+        y: 100,
         questions: [
             ["How can humans influence the outcome of machine learning? Through…",
              [
@@ -38,7 +38,7 @@ const Departments = [
         title: "Authority 'Create'",
         image: "PICS/Departaments/D2.png",
         stop_x: 900,
-        y: 240,
+        y: 200,
         questions: [
             ["The game statistics of a basketball team are to be used to predict how many games it will win in the current season. Which algorithm is best suited to make this prediction?",
              [
@@ -71,7 +71,7 @@ const Departments = [
         title: "Authority 'Detect'",
         image: "PICS/Departaments/D3.png",
         stop_x: 900,
-        y: 360,
+        y: 300,
         questions: [
             ["Which of these applications does NOT use AI?",
              [
@@ -104,7 +104,7 @@ const Departments = [
         title: "Authority 'Generative AI'",
         image: "PICS/Departaments/D4.png",
         stop_x: 900,
-        y: 480,
+        y: 400,
         questions: [
             ["What does \"generative\" mean in the context of artificial intelligence?",
              [
@@ -136,7 +136,7 @@ const Departments = [
         title: "Authority 'Understanding AI'",
         image: "PICS/Departaments/D5.png",
         stop_x: 900,
-        y: 480,
+        y: 500,
         questions: [
             ["How does a recommendation system of a streaming service based on AI work?",
              [
