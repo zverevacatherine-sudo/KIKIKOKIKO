@@ -72,7 +72,7 @@ class Scores {
         this.ctx.fillStyle = "white";
         this.ctx.font = "42px Comicsansms, Arial";
         this.ctx.textAlign = "left";
-        this.ctx.drawImage(this.image_progress, 1000, 20);
+        this.ctx.drawImage(this.image_progress, 940, 20);
         this.ctx.fillText(`${count}/${this.total_departments}`, 1085, 72);
     }
 
