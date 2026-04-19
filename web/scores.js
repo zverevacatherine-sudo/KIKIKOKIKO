@@ -33,6 +33,10 @@ class Scores {
         // Game state
         this.completed_departments = new Set();
         this.total_correct_answers = 0;
+        this.total_departments = (typeof Departments !== 'undefined' && Departments)
+            ? Departments.length
+            : 5;
+
         // Calculate max answers safely
         this.max_answers = (typeof Departments !== 'undefined' && Departments) 
             ? Departments.reduce((sum, d) => sum + d.questions.length, 0)
@@ -66,10 +70,10 @@ class Scores {
         
         const count = this.completed_departments.size;
         this.ctx.fillStyle = "white";
-        this.ctx.font = "50px Comicsansms, Arial";
+        this.ctx.font = "42px Comicsansms, Arial";
         this.ctx.textAlign = "left";
         this.ctx.drawImage(this.image_progress, 1000, 20);
-        this.ctx.fillText(count.toString(), 1110, 70);
+        this.ctx.fillText(`${count}/${this.total_departments}`, 1085, 72);
     }
 
     finish(hero) {
@@ -150,4 +154,3 @@ class Scores {
         this.ctx.closePath();
     }
 }
-
