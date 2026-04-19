@@ -26,6 +26,15 @@ class Game {
         this.running = true;
         this.paused = false;
 
+        // Pause rules review state
+        this.pause_show_rules = false;
+        this.pause_rules_button = {
+            x: CONFIG.WIDTH / 2 - 170,
+            y: CONFIG.HEIGHT / 2 + 40,
+            width: 340,
+            height: 70
+        };
+
         // Game objects
         this.background = new Background();
         this.rocket = new Spaceship(this.ctx);
@@ -110,8 +119,6 @@ class Game {
         const scaledX = x * scaleX;
         const scaledY = y * scaleY;
 
-        // console.log('Click at:', scaledX, scaledY, 'State:', this.state);
-
         if (this.state === "menu") {
             const action = this.start_screen.handle_click(scaledX, scaledY, this.rules_completed);
 
@@ -135,6 +142,23 @@ class Game {
         }
 
         if (this.state === "game") {
+            // Pause mode clicks
+            if (this.paused) {
+                if (this.pause_show_rules) {
+                    const r = this.rules_screen.handle_click(scaledX, scaledY);
+                    if (r === "done") {
+                        this.pause_show_rules = false; // go back to pause screen
+                    }
+                    return;
+                }
+
+                if (pointInRect(scaledX, scaledY, this.pause_rules_button)) {
+                    this.pause_show_rules = true;
+                    this.rules_screen.open();
+                }
+                return;
+            }
+
             // Only handle restart when game over
             if (this.scores.game_over) {
                 if (this.scores.restart_clicked(scaledX, scaledY)) {
@@ -209,6 +233,8 @@ class Game {
         }
 
         this.test_screen.close_quiz();
+        this.pause_show_rules = false;
+        this.paused = false;
     }
 
     start_game_new_session() {
@@ -285,13 +311,15 @@ class Game {
     doPause() {
         // Freeze the game until SPACE is pressed again
         this.paused = true;
+        this.pause_show_rules = false;
         this.soundManager.pauseMusic();
         this.eventsManager.pause_timers();
 
         const handleKeyDown = (e) => {
-            if (e.key === ' ') {
+            if (e.key === ' ' && !this.pause_show_rules) {
                 e.preventDefault();
                 this.paused = false;
+                this.pause_show_rules = false;
                 this.soundManager.resumeMusic();
                 this.eventsManager.resume_after_quiz(this.scores);
                 document.removeEventListener('keydown', handleKeyDown);
@@ -323,13 +351,52 @@ class Game {
         } else if (this.state === "game") {
             // Pause overlay
             if (this.paused) {
-                this.ctx.fillStyle = "rgba(39, 44, 78, 0.59)";
+                if (this.pause_show_rules) {
+                    this.rules_screen.draw();
+                    requestAnimationFrame(() => this.gameLoop());
+                    return;
+                }
+
+                this.ctx.fillStyle = "rgba(39, 44, 78, 0.78)";
                 this.ctx.fillRect(0, 0, CONFIG.WIDTH, CONFIG.HEIGHT);
 
                 this.ctx.fillStyle = "white";
                 this.ctx.font = "50px Comicsansms, Arial";
                 this.ctx.textAlign = "center";
-                this.ctx.fillText("Pause! Press SPACE to continue", CONFIG.WIDTH / 2, CONFIG.HEIGHT / 2);
+                this.ctx.fillText("Pause", CONFIG.WIDTH / 2, CONFIG.HEIGHT / 2 - 60);
+
+                this.ctx.font = "30px Comicsansms, Arial";
+                this.ctx.fillText("Press SPACE to continue", CONFIG.WIDTH / 2, CONFIG.HEIGHT / 2 - 5);
+
+                // Review Rules button
+                this.ctx.fillStyle = "rgb(39, 44, 78)";
+                this._drawRoundedRect(
+                    this.pause_rules_button.x,
+                    this.pause_rules_button.y,
+                    this.pause_rules_button.width,
+                    this.pause_rules_button.height,
+                    12
+                );
+                this.ctx.fill();
+
+                this.ctx.strokeStyle = "white";
+                this.ctx.lineWidth = 2;
+                this._drawRoundedRect(
+                    this.pause_rules_button.x,
+                    this.pause_rules_button.y,
+                    this.pause_rules_button.width,
+                    this.pause_rules_button.height,
+                    12
+                );
+                this.ctx.stroke();
+
+                this.ctx.fillStyle = "white";
+                this.ctx.font = "28px Comicsansms, Arial";
+                this.ctx.fillText(
+                    "Review Rules",
+                    this.pause_rules_button.x + this.pause_rules_button.width / 2,
+                    this.pause_rules_button.y + this.pause_rules_button.height / 2 + 10
+                );
 
                 requestAnimationFrame(() => this.gameLoop());
                 return;
@@ -397,13 +464,27 @@ class Game {
             // Music control
             if (this.test_screen.quiz_active) {
                 this.soundManager.pauseMusic();
-            } else {
+            } else if (!this.paused) {
                 this.soundManager.resumeMusic();
             }
         }
 
         // Continue loop
         requestAnimationFrame(() => this.gameLoop());
+    }
+
+    _drawRoundedRect(x, y, width, height, radius) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(x + radius, y);
+        this.ctx.lineTo(x + width - radius, y);
+        this.ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        this.ctx.lineTo(x + width, y + height - radius);
+        this.ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        this.ctx.lineTo(x + radius, y + height);
+        this.ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        this.ctx.lineTo(x, y + radius);
+        this.ctx.quadraticCurveTo(x, y, x + radius, y);
+        this.ctx.closePath();
     }
 }
 
