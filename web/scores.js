@@ -125,7 +125,7 @@ class Scores {
         this.ctx.fillStyle = "white";
         this.ctx.font = "40px Comicsansms, Arial";
         this.ctx.textAlign = "center";
-        this.ctx.fillText("Start from beginning", this.restart_rect.x + this.restart_rect.width / 2, this.restart_rect.y + this.restart_rect.height / 2 + 15);
+        this.ctx.fillText("Repair the spaceship", this.restart_rect.x + this.restart_rect.width / 2, this.restart_rect.y + this.restart_rect.height / 2 + 15);
     }
 
     restart_clicked(x, y) {
