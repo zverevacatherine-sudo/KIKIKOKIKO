@@ -28,16 +28,26 @@ class StartScreen {
             canvas.height = 300;
 
             const c = canvas.getContext('2d');
-            c.drawImage(img, 0, 0, 950, 300);
+
+            c.drawImage(
+                img,
+                0,
+                0,
+                950,
+                300
+            );
 
             this.logo = canvas;
             this.logoLoaded = true;
         });
     }
 
+
     draw(start_allowed) {
+
         // Dark overlay
         this.ctx.fillStyle = "rgba(0, 0, 0, 0.59)";
+
         this.ctx.fillRect(
             0,
             0,
@@ -45,8 +55,10 @@ class StartScreen {
             CONFIG.HEIGHT
         );
 
+
         // Draw logo
         if (this.logoLoaded) {
+
             this.ctx.drawImage(
                 this.logo,
                 CONFIG.WIDTH / 2 - 475,
@@ -54,8 +66,10 @@ class StartScreen {
             );
         }
 
-        // Start button
+
+        // START BUTTON
         if (start_allowed) {
+
             this.ctx.fillStyle = "rgb(39, 44, 78)";
 
             this._drawRoundedRect(
@@ -67,7 +81,8 @@ class StartScreen {
             );
 
             this.ctx.fill();
-            
+
+
             this.ctx.strokeStyle = "white";
             this.ctx.lineWidth = 2;
 
@@ -80,19 +95,29 @@ class StartScreen {
             );
 
             this.ctx.stroke();
-            
+
+
             this.ctx.fillStyle = "white";
-            this.ctx.font = "44px Comicsansms, Arial";
+
+            this.ctx.font =
+                "44px Comicsansms, Arial";
+
             this.ctx.textAlign = "center";
 
             this.ctx.fillText(
                 "Start",
-                this.btn_start.x + this.btn_start.width / 2,
-                this.btn_start.y + this.btn_start.height / 2 + 15
+                this.btn_start.x +
+                    this.btn_start.width / 2,
+                this.btn_start.y +
+                    this.btn_start.height / 2 +
+                    15
             );
 
+
         } else {
-            this.ctx.fillStyle = "rgb(128, 128, 128)";
+
+            this.ctx.fillStyle =
+                "rgb(128, 128, 128)";
 
             this._drawRoundedRect(
                 this.btn_start.x,
@@ -103,7 +128,8 @@ class StartScreen {
             );
 
             this.ctx.fill();
-            
+
+
             this.ctx.strokeStyle = "white";
             this.ctx.lineWidth = 2;
 
@@ -116,28 +142,44 @@ class StartScreen {
             );
 
             this.ctx.stroke();
-            
-            this.ctx.fillStyle = "rgb(96, 96, 96)";
-            this.ctx.font = "44px Comicsansms, Arial";
+
+
+            this.ctx.fillStyle =
+                "rgb(96, 96, 96)";
+
+            this.ctx.font =
+                "44px Comicsansms, Arial";
+
             this.ctx.textAlign = "center";
 
             this.ctx.fillText(
                 "Start",
-                this.btn_start.x + this.btn_start.width / 2,
-                this.btn_start.y + this.btn_start.height / 2 - 5
+                this.btn_start.x +
+                    this.btn_start.width / 2,
+                this.btn_start.y +
+                    this.btn_start.height / 2 -
+                    5
             );
-            
-            this.ctx.font = "24px Comicsansms, Arial";
+
+
+            this.ctx.font =
+                "24px Comicsansms, Arial";
 
             this.ctx.fillText(
                 "(Read the rules first)",
-                this.btn_start.x + this.btn_start.width / 2,
-                this.btn_start.y + this.btn_start.height / 2 + 30
+                this.btn_start.x +
+                    this.btn_start.width / 2,
+                this.btn_start.y +
+                    this.btn_start.height / 2 +
+                    30
             );
         }
 
-        // Rules button
-        this.ctx.fillStyle = "rgb(39, 44, 78)";
+
+        // ASSESSMENT RULES BUTTON
+
+        this.ctx.fillStyle =
+            "rgb(39, 44, 78)";
 
         this._drawRoundedRect(
             this.btn_rules.x,
@@ -148,7 +190,8 @@ class StartScreen {
         );
 
         this.ctx.fill();
-        
+
+
         this.ctx.strokeStyle = "white";
         this.ctx.lineWidth = 2;
 
@@ -161,35 +204,72 @@ class StartScreen {
         );
 
         this.ctx.stroke();
-        
+
+
         this.ctx.fillStyle = "white";
-        this.ctx.font = "44px Comicsansms, Arial";
+
+        this.ctx.font =
+            "44px Comicsansms, Arial";
+
         this.ctx.textAlign = "center";
 
         this.ctx.fillText(
             "Assessment rules",
-            this.btn_rules.x + this.btn_rules.width / 2,
-            this.btn_rules.y + this.btn_rules.height / 2 + 15
+            this.btn_rules.x +
+                this.btn_rules.width / 2,
+            this.btn_rules.y +
+                this.btn_rules.height / 2 +
+                15
         );
     }
 
-    handle_click(x, y, start_allowed) {
-        if (pointInRect(x, y, this.btn_start)) {
+
+    handle_click(
+        x,
+        y,
+        start_allowed
+    ) {
+
+        if (
+            pointInRect(
+                x,
+                y,
+                this.btn_start
+            )
+        ) {
+
             if (start_allowed) {
                 return "start";
             }
 
             return null;
         }
-        
-        if (pointInRect(x, y, this.btn_rules)) {
+
+
+        if (
+            pointInRect(
+                x,
+                y,
+                this.btn_rules
+            )
+        ) {
+
             return "rules";
         }
-        
+
+
         return null;
     }
-    
-    _drawRoundedRect(x, y, width, height, radius) {
+
+
+    _drawRoundedRect(
+        x,
+        y,
+        width,
+        height,
+        radius
+    ) {
+
         this.ctx.beginPath();
 
         this.ctx.moveTo(
@@ -250,73 +330,127 @@ class StartScreen {
 }
 
 
+
 class RulesScreen {
+
     constructor(ctx) {
+
         this.ctx = ctx;
+
         this.index = 0;
+
         this.rule_images = [];
+
         this.imagesLoaded = false;
 
-        // Rectangular next button
+
+        // Same rectangular button as Basic KiKo
         this.next_rect = {
+
             x: CONFIG.WIDTH - 150,
+
             y: CONFIG.HEIGHT - 125,
+
             width: 85,
+
             height: 65
         };
-        
+
+
         const rulePaths = [];
 
-        for (let i = 1; i <= 16; i++) {
+
+        for (
+            let i = 1;
+            i <= 16;
+            i++
+        ) {
+
             rulePaths.push(
                 `PICS/Rules/Rules/Ru${i}.png`
             );
         }
-        
-        loadImages(rulePaths).then(images => {
-            this.rule_images = images.map(img => {
-                const canvas = document.createElement('canvas');
 
-                canvas.width = CONFIG.WIDTH;
-                canvas.height = CONFIG.HEIGHT;
 
-                const c = canvas.getContext('2d');
+        loadImages(rulePaths).then(
+            images => {
 
-                c.drawImage(
-                    img,
-                    0,
-                    0,
-                    CONFIG.WIDTH,
-                    CONFIG.HEIGHT
-                );
+                this.rule_images =
+                    images.map(img => {
 
-                return canvas;
-            });
+                        const canvas =
+                            document.createElement(
+                                'canvas'
+                            );
 
-            this.imagesLoaded = true;
-        });
+
+                        canvas.width =
+                            CONFIG.WIDTH;
+
+                        canvas.height =
+                            CONFIG.HEIGHT;
+
+
+                        const c =
+                            canvas.getContext(
+                                '2d'
+                            );
+
+
+                        c.drawImage(
+                            img,
+                            0,
+                            0,
+                            CONFIG.WIDTH,
+                            CONFIG.HEIGHT
+                        );
+
+
+                        return canvas;
+                    });
+
+
+                this.imagesLoaded = true;
+            }
+        );
     }
 
+
     open() {
+
         this.index = 0;
     }
 
+
     draw() {
+
         if (
             !this.imagesLoaded ||
-            this.index >= this.rule_images.length
+            this.index >=
+                this.rule_images.length
         ) {
+
             return;
         }
-        
+
+
+        // Draw current rules page
+
         this.ctx.drawImage(
-            this.rule_images[this.index],
+            this.rule_images[
+                this.index
+            ],
             0,
             0
         );
 
-        // Rectangular next button
-        this.ctx.fillStyle = "rgb(39, 44, 78)";
+
+        // NEXT BUTTON
+        // Same color as Basic KiKo
+
+        this.ctx.fillStyle =
+            "rgb(39, 44, 78)";
+
 
         this._drawRoundedRect(
             this.next_rect.x,
@@ -325,12 +459,19 @@ class RulesScreen {
             this.next_rect.height,
             12
         );
+
 
         this.ctx.fill();
 
-        // Border
-        this.ctx.strokeStyle = "rgb(200, 200, 200)";
+
+        // White border
+        // Same as Basic KiKo
+
+        this.ctx.strokeStyle =
+            "white";
+
         this.ctx.lineWidth = 2;
+
 
         this._drawRoundedRect(
             this.next_rect.x,
@@ -340,44 +481,82 @@ class RulesScreen {
             12
         );
 
+
         this.ctx.stroke();
 
+
         // Arrow
-        this.ctx.fillStyle = "white";
-        this.ctx.font = "40px Gill Sans, Arial";
-        this.ctx.textAlign = "center";
+        // Same font, size and position as Basic KiKo
+
+        this.ctx.fillStyle =
+            "white";
+
+        this.ctx.font =
+            "32px Arial";
+
+        this.ctx.textAlign =
+            "center";
+
 
         this.ctx.fillText(
             ">",
-            this.next_rect.x + this.next_rect.width / 2,
-            this.next_rect.y + 45
+            this.next_rect.x +
+                this.next_rect.width / 2,
+            this.next_rect.y +
+                43
         );
     }
 
+
     handle_click(x, y) {
-        if (pointInRect(x, y, this.next_rect)) {
+
+        if (
+            pointInRect(
+                x,
+                y,
+                this.next_rect
+            )
+        ) {
+
             this.index++;
 
-            if (this.index >= this.rule_images.length) {
+
+            if (
+                this.index >=
+                this.rule_images.length
+            ) {
+
                 return "done";
             }
         }
 
+
         return null;
     }
 
-    _drawRoundedRect(x, y, width, height, radius) {
+
+    _drawRoundedRect(
+        x,
+        y,
+        width,
+        height,
+        radius
+    ) {
+
         this.ctx.beginPath();
+
 
         this.ctx.moveTo(
             x + radius,
             y
         );
 
+
         this.ctx.lineTo(
             x + width - radius,
             y
         );
+
 
         this.ctx.quadraticCurveTo(
             x + width,
@@ -386,10 +565,12 @@ class RulesScreen {
             y + radius
         );
 
+
         this.ctx.lineTo(
             x + width,
             y + height - radius
         );
+
 
         this.ctx.quadraticCurveTo(
             x + width,
@@ -398,10 +579,12 @@ class RulesScreen {
             y + height
         );
 
+
         this.ctx.lineTo(
             x + radius,
             y + height
         );
+
 
         this.ctx.quadraticCurveTo(
             x,
@@ -410,10 +593,12 @@ class RulesScreen {
             y + height - radius
         );
 
+
         this.ctx.lineTo(
             x,
             y + radius
         );
+
 
         this.ctx.quadraticCurveTo(
             x,
@@ -421,6 +606,7 @@ class RulesScreen {
             x + radius,
             y
         );
+
 
         this.ctx.closePath();
     }
