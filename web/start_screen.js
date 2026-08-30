@@ -128,8 +128,24 @@ class RulesScreen {
         this.index = 0;
         this.rule_images = [];
         this.imagesLoaded = false;
-        this.circle_r = 30;
-        this.circle_center = { x: CONFIG.WIDTH - 90, y: CONFIG.HEIGHT - 90 };
+        this.next_rect = {
+    x: CONFIG.WIDTH - 150,
+    y: CONFIG.HEIGHT - 125,
+    width: 85,
+    height: 65
+_drawRoundedRect(x, y, width, height, radius) {
+    this.ctx.beginPath();
+    this.ctx.moveTo(x + radius, y);
+    this.ctx.lineTo(x + width - radius, y);
+    this.ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    this.ctx.lineTo(x + width, y + height - radius);
+    this.ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    this.ctx.lineTo(x + radius, y + height);
+    this.ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    this.ctx.lineTo(x, y + radius);
+    this.ctx.quadraticCurveTo(x, y, x + radius, y);
+    this.ctx.closePath();            
+};
         
         const rulePaths = [];
         for (let i = 1; i <= 16; i++) {
@@ -159,26 +175,41 @@ class RulesScreen {
         this.ctx.drawImage(this.rule_images[this.index], 0, 0);
 
         // Circle button
+        // Rectangular button
         this.ctx.fillStyle = "rgb(39, 44, 78)";
-        this.ctx.beginPath();
-        this.ctx.arc(this.circle_center.x, this.circle_center.y, this.circle_r, 0, Math.PI * 2);
+        this._drawRoundedRect(
+            this.next_rect.x,
+            this.next_rect.y,
+            this.next_rect.width,
+            this.next_rect.height,
+            12
+        );
         this.ctx.fill();
 
         this.ctx.strokeStyle = "rgb(200, 200, 200)";
         this.ctx.lineWidth = 2;
-        this.ctx.beginPath();
-        this.ctx.arc(this.circle_center.x, this.circle_center.y, this.circle_r, 0, Math.PI * 2);
+        this._drawRoundedRect(
+            this.next_rect.x,
+            this.next_rect.y,
+            this.next_rect.width,
+            this.next_rect.height,
+            12
+        );
         this.ctx.stroke();
 
         // Arrow
         this.ctx.fillStyle = "white";
         this.ctx.font = "40px Gill Sans, Arial";
         this.ctx.textAlign = "center";
-        this.ctx.fillText(">", this.circle_center.x, this.circle_center.y + 12);
+        this.ctx.fillText(
+            ">",
+            this.next_rect.x + this.next_rect.width / 2,
+            this.next_rect.y + 45
+        );
     }
 
     handle_click(x, y) {
-        if (pointInCircle(x, y, this.circle_center.x, this.circle_center.y, this.circle_r)) {
+        if (pointInRect(x, y, this.next_rect)) {
             this.index++;
             if (this.index >= this.rule_images.length) {
                 return "done";
