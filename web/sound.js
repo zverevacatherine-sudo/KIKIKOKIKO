@@ -1,79 +1,160 @@
-// Sound management
+// Sound management for KiKoGame Challenge condition.
+
 class SoundManager {
     constructor() {
-        this.backgroundMusic = document.getElementById('backgroundMusic');
-        this.clickSound = document.getElementById('clickSound');
-        this.hitSound = document.getElementById('hitSound');
-        this.healSound = document.getElementById('healSound');
+        this.backgroundMusic =
+            document.getElementById("backgroundMusic");
+
+        this.clickSound =
+            document.getElementById("clickSound");
+
+        this.hitSound =
+            document.getElementById("hitSound");
+
+        this.healSound =
+            document.getElementById("healSound");
+
         this.musicPaused = false;
+
+        const audioElements = [
+            this.backgroundMusic,
+            this.clickSound,
+            this.hitSound,
+            this.healSound
+        ];
+
+        audioElements.forEach(audio => {
+            if (audio) {
+                audio.preload = "auto";
+                audio.volume = 1.0;
+                audio.load();
+            }
+        });
     }
 
     playMusic() {
+        if (!this.backgroundMusic) {
+            return Promise.resolve();
+        }
+
         try {
-            // Возвращаем Promise для обработки ошибок автозапуска
-            return this.backgroundMusic.play().catch(e => {
-                // Браузер может блокировать автозапуск звука
-                // Это нормально, звук запустится при первом взаимодействии пользователя
-                return Promise.reject(e);
-            });
-        } catch (e) {
-            return Promise.reject(e);
+            this.backgroundMusic.volume = 1.0;
+
+            return this.backgroundMusic
+                .play()
+                .catch(error => {
+                    return Promise.reject(error);
+                });
+        } catch (error) {
+            return Promise.reject(error);
         }
     }
 
     pauseMusic() {
-        if (this.backgroundMusic && !this.musicPaused) {
+        if (
+            this.backgroundMusic &&
+            !this.backgroundMusic.paused
+        ) {
             this.backgroundMusic.pause();
-            this.musicPaused = true;
         }
+
+        this.musicPaused = true;
     }
 
     resumeMusic() {
-        if (this.backgroundMusic && this.musicPaused) {
-            this.backgroundMusic.play().catch(e => {
-                console.log('Music resume failed:', e);
-            });
+        if (!this.backgroundMusic) {
+            return;
+        }
+
+        if (
+            this.musicPaused ||
+            this.backgroundMusic.paused
+        ) {
+            this.backgroundMusic
+                .play()
+                .catch(error => {
+                    console.log(
+                        "Music resume failed:",
+                        error
+                    );
+                });
+
             this.musicPaused = false;
         }
     }
 
     playClick() {
+        if (!this.clickSound) {
+            console.warn(
+                "Department click sound element was not found."
+            );
+            return;
+        }
+
         try {
+            // Restart the same preloaded element on every department click.
+            this.clickSound.pause();
             this.clickSound.currentTime = 0;
-            this.clickSound.play().catch(e => {});
-        } catch (e) {}
+            this.clickSound.volume = 1.0;
+
+            const playPromise =
+                this.clickSound.play();
+
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.warn(
+                        "Department click sound could not be played:",
+                        error
+                    );
+                });
+            }
+        } catch (error) {
+            console.warn(
+                "Department click sound error:",
+                error
+            );
+        }
     }
 
     playHit() {
+        if (!this.hitSound) {
+            return;
+        }
+
         try {
-            // В Python версии каждый раз создается новый Sound объект (hit_cometa = pygame.mixer.Sound(...))
-            // Поэтому звук всегда играет, даже если предыдущий еще не закончился
-            // В JavaScript создаем новый Audio элемент для каждого воспроизведения
-            const sound = new Audio(this.hitSound.src); // Создаем новый Audio элемент
-            sound.volume = this.hitSound.volume || 1.0;
+            // Fresh copy lets repeated collisions overlap safely.
+            const sound =
+                this.hitSound.cloneNode(true);
+
+            sound.volume = 1.0;
             sound.currentTime = 0;
-            sound.play().catch(e => {
-                // Если не удалось воспроизвести, пробуем оригинальный элемент
+
+            sound.play().catch(() => {
                 try {
+                    this.hitSound.pause();
                     this.hitSound.currentTime = 0;
-                    this.hitSound.play().catch(e2 => {});
-                } catch (e2) {}
+                    this.hitSound.play().catch(() => {});
+                } catch (error) {}
             });
-        } catch (e) {
-            // Fallback на обычное воспроизведение
+        } catch (error) {
             try {
+                this.hitSound.pause();
                 this.hitSound.currentTime = 0;
-                this.hitSound.play().catch(e => {});
-            } catch (e2) {}
+                this.hitSound.play().catch(() => {});
+            } catch (fallbackError) {}
         }
     }
 
     playHeal() {
+        if (!this.healSound) {
+            return;
+        }
+
         try {
+            this.healSound.pause();
             this.healSound.currentTime = 0;
-            this.healSound.play().catch(e => {});
-        } catch (e) {}
+            this.healSound.volume = 1.0;
+            this.healSound.play().catch(() => {});
+        } catch (error) {}
     }
 }
-
-

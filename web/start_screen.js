@@ -5,60 +5,50 @@ class StartScreen {
         this.ctx = ctx;
         this.logo = null;
         this.logoLoaded = false;
+
         this.btn_w = 560;
-        this.btn_h = 110;
-        
+        this.btn_h = 90;
+
+        // Keep the familiar KiKoGame order, while adding Pre Study as step 1.
         this.btn_start = {
             x: CONFIG.WIDTH / 2 - this.btn_w / 2,
-            y: CONFIG.HEIGHT / 2 - 15,
+            y: 325,
             width: this.btn_w,
             height: this.btn_h
         };
-        
+
         this.btn_rules = {
             x: CONFIG.WIDTH / 2 - this.btn_w / 2,
-            y: CONFIG.HEIGHT / 2 + 120,
+            y: 435,
             width: this.btn_w,
             height: this.btn_h
         };
-        
-        loadImage('PICS/Player_right/LOGO.png').then(img => {
-            const canvas = document.createElement('canvas');
+
+        this.btn_prestudy = {
+            x: CONFIG.WIDTH / 2 - this.btn_w / 2,
+            y: 545,
+            width: this.btn_w,
+            height: this.btn_h
+        };
+
+        loadImage("PICS/Player_right/LOGO.png").then(img => {
+            const canvas = document.createElement("canvas");
             canvas.width = 950;
             canvas.height = 300;
 
-            const c = canvas.getContext('2d');
-
-            c.drawImage(
-                img,
-                0,
-                0,
-                950,
-                300
-            );
+            const c = canvas.getContext("2d");
+            c.drawImage(img, 0, 0, 950, 300);
 
             this.logo = canvas;
             this.logoLoaded = true;
         });
     }
 
-
-    draw(start_allowed) {
-
-        // Dark overlay
+    draw(prestudy_completed, rules_completed) {
         this.ctx.fillStyle = "rgba(0, 0, 0, 0.59)";
+        this.ctx.fillRect(0, 0, CONFIG.WIDTH, CONFIG.HEIGHT);
 
-        this.ctx.fillRect(
-            0,
-            0,
-            CONFIG.WIDTH,
-            CONFIG.HEIGHT
-        );
-
-
-        // Draw logo
         if (this.logoLoaded) {
-
             this.ctx.drawImage(
                 this.logo,
                 CONFIG.WIDTH / 2 - 475,
@@ -66,392 +56,217 @@ class StartScreen {
             );
         }
 
+        // START is available only after Pre Study + Rules.
+        const start_allowed =
+            prestudy_completed && rules_completed;
 
-        // START BUTTON
-        if (start_allowed) {
-
-            this.ctx.fillStyle = "rgb(39, 44, 78)";
-
-            this._drawRoundedRect(
-                this.btn_start.x,
-                this.btn_start.y,
-                this.btn_start.width,
-                this.btn_start.height,
-                18
-            );
-
-            this.ctx.fill();
-
-
-            this.ctx.strokeStyle = "white";
-            this.ctx.lineWidth = 2;
-
-            this._drawRoundedRect(
-                this.btn_start.x,
-                this.btn_start.y,
-                this.btn_start.width,
-                this.btn_start.height,
-                18
-            );
-
-            this.ctx.stroke();
-
-
-            this.ctx.fillStyle = "white";
-
-            this.ctx.font =
-                "44px Comicsansms, Arial";
-
-            this.ctx.textAlign = "center";
-
-            this.ctx.fillText(
-                "Start",
-                this.btn_start.x +
-                    this.btn_start.width / 2,
-                this.btn_start.y +
-                    this.btn_start.height / 2 +
-                    15
-            );
-
-
-        } else {
-
-            this.ctx.fillStyle =
-                "rgb(128, 128, 128)";
-
-            this._drawRoundedRect(
-                this.btn_start.x,
-                this.btn_start.y,
-                this.btn_start.width,
-                this.btn_start.height,
-                18
-            );
-
-            this.ctx.fill();
-
-
-            this.ctx.strokeStyle = "white";
-            this.ctx.lineWidth = 2;
-
-            this._drawRoundedRect(
-                this.btn_start.x,
-                this.btn_start.y,
-                this.btn_start.width,
-                this.btn_start.height,
-                18
-            );
-
-            this.ctx.stroke();
-
-
-            this.ctx.fillStyle =
-                "rgb(96, 96, 96)";
-
-            this.ctx.font =
-                "44px Comicsansms, Arial";
-
-            this.ctx.textAlign = "center";
-
-            this.ctx.fillText(
-                "Start",
-                this.btn_start.x +
-                    this.btn_start.width / 2,
-                this.btn_start.y +
-                    this.btn_start.height / 2 -
-                    5
-            );
-
-
-            this.ctx.font =
-                "24px Comicsansms, Arial";
-
-            this.ctx.fillText(
-                "(Read the rules first)",
-                this.btn_start.x +
-                    this.btn_start.width / 2,
-                this.btn_start.y +
-                    this.btn_start.height / 2 +
-                    30
-            );
-        }
-
-
-        // ASSESSMENT RULES BUTTON
-
-        this.ctx.fillStyle =
-            "rgb(39, 44, 78)";
-
-        this._drawRoundedRect(
-            this.btn_rules.x,
-            this.btn_rules.y,
-            this.btn_rules.width,
-            this.btn_rules.height,
-            18
+        this._drawButton(
+            this.btn_start,
+            "Start",
+            start_allowed
+                ? "rgb(39, 44, 78)"
+                : "rgb(128, 128, 128)",
+            start_allowed
+                ? "white"
+                : "rgb(96, 96, 96)"
         );
 
-        this.ctx.fill();
-
-
-        this.ctx.strokeStyle = "white";
-        this.ctx.lineWidth = 2;
-
-        this._drawRoundedRect(
-            this.btn_rules.x,
-            this.btn_rules.y,
-            this.btn_rules.width,
-            this.btn_rules.height,
-            18
-        );
-
-        this.ctx.stroke();
-
-
-        this.ctx.fillStyle = "white";
-
-        this.ctx.font =
-            "44px Comicsansms, Arial";
-
-        this.ctx.textAlign = "center";
-
-        this.ctx.fillText(
+        // RULES become available only after passing the Pre Study.
+        this._drawButton(
+            this.btn_rules,
             "Assessment rules",
-            this.btn_rules.x +
-                this.btn_rules.width / 2,
-            this.btn_rules.y +
-                this.btn_rules.height / 2 +
-                15
+            prestudy_completed
+                ? "rgb(39, 44, 78)"
+                : "rgb(128, 128, 128)",
+            prestudy_completed
+                ? "white"
+                : "rgb(96, 96, 96)"
+        );
+
+        // PRE STUDY is the first mandatory step.
+        this._drawButton(
+            this.btn_prestudy,
+            prestudy_completed
+                ? "Pre Study completed"
+                : "Pre Study",
+            prestudy_completed
+                ? "rgb(128, 128, 128)"
+                : "rgb(39, 44, 78)",
+            prestudy_completed
+                ? "rgb(96, 96, 96)"
+                : "white"
         );
     }
 
+    _drawButton(rect, text, bg, fg) {
+        this.ctx.fillStyle = bg;
+        this._drawRoundedRect(
+            rect.x,
+            rect.y,
+            rect.width,
+            rect.height,
+            18
+        );
+        this.ctx.fill();
+
+        this.ctx.strokeStyle = "white";
+        this.ctx.lineWidth = 2;
+        this._drawRoundedRect(
+            rect.x,
+            rect.y,
+            rect.width,
+            rect.height,
+            18
+        );
+        this.ctx.stroke();
+
+        this.ctx.fillStyle = fg;
+        this.ctx.font = "40px Comicsansms, Arial";
+        this.ctx.textAlign = "center";
+        this.ctx.fillText(
+            text,
+            rect.x + rect.width / 2,
+            rect.y + rect.height / 2 + 14
+        );
+    }
 
     handle_click(
         x,
         y,
-        start_allowed
+        prestudy_completed,
+        rules_completed
     ) {
-
         if (
-            pointInRect(
-                x,
-                y,
-                this.btn_start
-            )
+            !prestudy_completed &&
+            pointInRect(x, y, this.btn_prestudy)
         ) {
-
-            if (start_allowed) {
-                return "start";
-            }
-
-            return null;
+            return "prestudy";
         }
 
-
         if (
-            pointInRect(
-                x,
-                y,
-                this.btn_rules
-            )
+            prestudy_completed &&
+            pointInRect(x, y, this.btn_rules)
         ) {
-
             return "rules";
         }
 
+        if (
+            prestudy_completed &&
+            rules_completed &&
+            pointInRect(x, y, this.btn_start)
+        ) {
+            return "start";
+        }
 
         return null;
     }
 
-
-    _drawRoundedRect(
-        x,
-        y,
-        width,
-        height,
-        radius
-    ) {
-
+    _drawRoundedRect(x, y, width, height, radius) {
         this.ctx.beginPath();
-
-        this.ctx.moveTo(
-            x + radius,
-            y
-        );
-
-        this.ctx.lineTo(
-            x + width - radius,
-            y
-        );
-
+        this.ctx.moveTo(x + radius, y);
+        this.ctx.lineTo(x + width - radius, y);
         this.ctx.quadraticCurveTo(
             x + width,
             y,
             x + width,
             y + radius
         );
-
         this.ctx.lineTo(
             x + width,
             y + height - radius
         );
-
         this.ctx.quadraticCurveTo(
             x + width,
             y + height,
             x + width - radius,
             y + height
         );
-
-        this.ctx.lineTo(
-            x + radius,
-            y + height
-        );
-
+        this.ctx.lineTo(x + radius, y + height);
         this.ctx.quadraticCurveTo(
             x,
             y + height,
             x,
             y + height - radius
         );
-
-        this.ctx.lineTo(
-            x,
-            y + radius
-        );
-
+        this.ctx.lineTo(x, y + radius);
         this.ctx.quadraticCurveTo(
             x,
             y,
             x + radius,
             y
         );
-
         this.ctx.closePath();
     }
 }
 
 
-
 class RulesScreen {
-
     constructor(ctx) {
-
         this.ctx = ctx;
-
         this.index = 0;
-
         this.rule_images = [];
-
         this.imagesLoaded = false;
 
-
-        // Same rectangular button as Basic KiKo
         this.next_rect = {
-
             x: CONFIG.WIDTH - 150,
-
             y: CONFIG.HEIGHT - 125,
-
             width: 85,
-
             height: 65
         };
 
-
         const rulePaths = [];
 
-
-        for (
-            let i = 1;
-            i <= 16;
-            i++
-        ) {
-
+        // Updated study version: Ru1.png through Ru12.png.
+        for (let i = 1; i <= 12; i++) {
             rulePaths.push(
                 `PICS/Rules/Rules/Ru${i}.png`
             );
         }
 
+        loadImages(rulePaths).then(images => {
+            this.rule_images = images.map(img => {
+                const canvas =
+                    document.createElement("canvas");
 
-        loadImages(rulePaths).then(
-            images => {
+                canvas.width = CONFIG.WIDTH;
+                canvas.height = CONFIG.HEIGHT;
 
-                this.rule_images =
-                    images.map(img => {
+                const c = canvas.getContext("2d");
 
-                        const canvas =
-                            document.createElement(
-                                'canvas'
-                            );
+                c.drawImage(
+                    img,
+                    0,
+                    0,
+                    CONFIG.WIDTH,
+                    CONFIG.HEIGHT
+                );
 
+                return canvas;
+            });
 
-                        canvas.width =
-                            CONFIG.WIDTH;
-
-                        canvas.height =
-                            CONFIG.HEIGHT;
-
-
-                        const c =
-                            canvas.getContext(
-                                '2d'
-                            );
-
-
-                        c.drawImage(
-                            img,
-                            0,
-                            0,
-                            CONFIG.WIDTH,
-                            CONFIG.HEIGHT
-                        );
-
-
-                        return canvas;
-                    });
-
-
-                this.imagesLoaded = true;
-            }
-        );
+            this.imagesLoaded = true;
+        });
     }
 
-
     open() {
-
         this.index = 0;
     }
 
-
     draw() {
-
         if (
             !this.imagesLoaded ||
-            this.index >=
-                this.rule_images.length
+            this.index >= this.rule_images.length
         ) {
-
             return;
         }
 
-
-        // Draw current rules page
-
         this.ctx.drawImage(
-            this.rule_images[
-                this.index
-            ],
+            this.rule_images[this.index],
             0,
             0
         );
 
-
-        // NEXT BUTTON
-        // Same color as Basic KiKo
-
-        this.ctx.fillStyle =
-            "rgb(39, 44, 78)";
-
-
+        this.ctx.fillStyle = "rgb(39, 44, 78)";
         this._drawRoundedRect(
             this.next_rect.x,
             this.next_rect.y,
@@ -459,20 +274,10 @@ class RulesScreen {
             this.next_rect.height,
             12
         );
-
-
         this.ctx.fill();
 
-
-        // White border
-        // Same as Basic KiKo
-
-        this.ctx.strokeStyle =
-            "white";
-
+        this.ctx.strokeStyle = "white";
         this.ctx.lineWidth = 2;
-
-
         this._drawRoundedRect(
             this.next_rect.x,
             this.next_rect.y,
@@ -480,134 +285,64 @@ class RulesScreen {
             this.next_rect.height,
             12
         );
-
-
         this.ctx.stroke();
 
-
-        // Arrow
-        // Same font, size and position as Basic KiKo
-
-        this.ctx.fillStyle =
-            "white";
-
-        this.ctx.font =
-            "32px Arial";
-
-        this.ctx.textAlign =
-            "center";
-
-
+        this.ctx.fillStyle = "white";
+        this.ctx.font = "32px Arial";
+        this.ctx.textAlign = "center";
         this.ctx.fillText(
             ">",
-            this.next_rect.x +
-                this.next_rect.width / 2,
-            this.next_rect.y +
-                43
+            this.next_rect.x + this.next_rect.width / 2,
+            this.next_rect.y + 43
         );
     }
 
-
     handle_click(x, y) {
+        if (pointInRect(x, y, this.next_rect)) {
+            this.index += 1;
 
-        if (
-            pointInRect(
-                x,
-                y,
-                this.next_rect
-            )
-        ) {
-
-            this.index++;
-
-
-            if (
-                this.index >=
-                this.rule_images.length
-            ) {
-
+            if (this.index >= this.rule_images.length) {
                 return "done";
             }
         }
 
-
         return null;
     }
 
-
-    _drawRoundedRect(
-        x,
-        y,
-        width,
-        height,
-        radius
-    ) {
-
+    _drawRoundedRect(x, y, width, height, radius) {
         this.ctx.beginPath();
-
-
-        this.ctx.moveTo(
-            x + radius,
-            y
-        );
-
-
-        this.ctx.lineTo(
-            x + width - radius,
-            y
-        );
-
-
+        this.ctx.moveTo(x + radius, y);
+        this.ctx.lineTo(x + width - radius, y);
         this.ctx.quadraticCurveTo(
             x + width,
             y,
             x + width,
             y + radius
         );
-
-
         this.ctx.lineTo(
             x + width,
             y + height - radius
         );
-
-
         this.ctx.quadraticCurveTo(
             x + width,
             y + height,
             x + width - radius,
             y + height
         );
-
-
-        this.ctx.lineTo(
-            x + radius,
-            y + height
-        );
-
-
+        this.ctx.lineTo(x + radius, y + height);
         this.ctx.quadraticCurveTo(
             x,
             y + height,
             x,
             y + height - radius
         );
-
-
-        this.ctx.lineTo(
-            x,
-            y + radius
-        );
-
-
+        this.ctx.lineTo(x, y + radius);
         this.ctx.quadraticCurveTo(
             x,
             y,
             x + radius,
             y
         );
-
-
         this.ctx.closePath();
     }
 }
