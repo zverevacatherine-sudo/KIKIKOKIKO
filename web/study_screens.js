@@ -43,7 +43,7 @@ class PreStudyScreen {
                 attention: false
             },
             {
-                question: "Attention check: Please select \"Please answer here\".",
+                question: "Dear participant, please select \"Please answer here\".",
                 answers: [
                     "a) Continue",
                     "b) Please answer here",
