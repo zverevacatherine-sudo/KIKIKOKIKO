@@ -238,7 +238,7 @@ class Scores {
         this.ctx.textAlign = "center";
 
         this.ctx.fillText(
-            "Continue with Experience Study:",
+            "Click here to continue with Experience Study",
             CONFIG.WIDTH / 2,
             this.continue_study_rect.y +
                 this.continue_study_rect.height / 2 +
