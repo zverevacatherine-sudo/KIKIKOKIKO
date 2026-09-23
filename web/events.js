@@ -173,8 +173,8 @@ class EventsManager {
             }
         }
 
-        // Keep up to three challenge objects on screen.
-        if (enemies.length < 3) {
+        // Keep up to fourt challenge objects on screen.
+        if (enemies.length < 4) {
             enemies.push(
                 new Komets(
                     4 + Math.random() * 2
