@@ -10,6 +10,7 @@ class Quiz {
         this.department_id = null;
         this.question_index = 0;
         this.correct_answered_q = 0;
+        this.responses = [];
         this.answer_rects = [];
         this.scored_question_count = 0;
         this.attention_check_index = -1;
@@ -28,6 +29,7 @@ class Quiz {
         this.department_id = dept_data.id;
         this.question_index = 0;
         this.correct_answered_q = 0;
+        this.responses = [];
 
         // Copy original questions so Departments data remains unchanged.
         this.list_of_questions = dept_data.questions.map(question => [
@@ -44,7 +46,7 @@ class Quiz {
             this.attention_check_index = this.list_of_questions.length;
 
             this.list_of_questions.push([
-                "Dear participant, please select \"Please answer here\".",
+                "Attention check: Please select \"Please answer here\".",
                 [
                     "a) Continue",
                     "b) Please answer here",
@@ -200,17 +202,44 @@ class Quiz {
                 continue;
             }
 
-            const correct_idx =
+            const question =
                 this.list_of_questions[
                     this.question_index
-                ][2];
+                ];
+
+            const correct_idx =
+                question[2];
+
+            const response = {
+                questionIndex:
+                    this.question_index,
+                questionText:
+                    question[0],
+                selectedIndex: i,
+                selectedLetter:
+                    String.fromCharCode(
+                        65 + i
+                    ),
+                correctIndex:
+                    correct_idx,
+                correctLetter:
+                    String.fromCharCode(
+                        65 + correct_idx
+                    ),
+                correct:
+                    i === correct_idx,
+                attentionCheck:
+                    this.question_index ===
+                    this.attention_check_index
+            };
+
+            this.responses.push(
+                response
+            );
 
             // The Department 3 attention check is screening only.
-            if (
-                this.question_index ===
-                this.attention_check_index
-            ) {
-                if (i !== correct_idx) {
+            if (response.attentionCheck) {
+                if (!response.correct) {
                     this.close_quiz();
                     return "attention_failed";
                 }
@@ -219,7 +248,7 @@ class Quiz {
                 return "answered";
             }
 
-            if (i === correct_idx) {
+            if (response.correct) {
                 this.correct_answered_q += 1;
             }
 
@@ -436,6 +465,14 @@ class Quiz {
 
     get_score() {
         return this.correct_answered_q;
+    }
+
+    get_responses() {
+        return this.responses.map(
+            response => ({
+                ...response
+            })
+        );
     }
 
     _drawRoundedRect(

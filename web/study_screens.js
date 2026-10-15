@@ -7,6 +7,7 @@ class PreStudyScreen {
         this.content_correct = 0;
         this.attention_passed = false;
         this.answer_rects = [];
+        this.responses = [];
 
         this.questions = [
             {
@@ -43,7 +44,7 @@ class PreStudyScreen {
                 attention: false
             },
             {
-                question: "Dear participant, please select \"Please answer here\".",
+                question: "Attention check: Please select \"Please answer here\".",
                 answers: [
                     "a) Continue",
                     "b) Please answer here",
@@ -61,6 +62,7 @@ class PreStudyScreen {
         this.content_correct = 0;
         this.attention_passed = false;
         this.answer_rects = [];
+        this.responses = [];
     }
 
     handle_click(x, y) {
@@ -73,11 +75,43 @@ class PreStudyScreen {
                 continue;
             }
 
-            const current = this.questions[this.question_index];
+            const current =
+                this.questions[
+                    this.question_index
+                ];
+
+            const selectedLetter =
+                String.fromCharCode(
+                    65 + i
+                );
+
+            const correctLetter =
+                String.fromCharCode(
+                    65 + current.correct
+                );
+
+            this.responses.push({
+                questionIndex:
+                    this.question_index,
+                selectedIndex: i,
+                selectedLetter:
+                    selectedLetter,
+                correctIndex:
+                    current.correct,
+                correctLetter:
+                    correctLetter,
+                correct:
+                    i === current.correct,
+                attentionCheck:
+                    current.attention
+            });
 
             if (current.attention) {
-                this.attention_passed = (i === current.correct);
-            } else if (i === current.correct) {
+                this.attention_passed =
+                    (i === current.correct);
+            } else if (
+                i === current.correct
+            ) {
                 this.content_correct += 1;
             }
 
@@ -105,6 +139,21 @@ class PreStudyScreen {
         }
 
         return null;
+    }
+
+    get_results() {
+        return {
+            contentCorrect:
+                this.content_correct,
+            attentionPassed:
+                this.attention_passed,
+            responses:
+                this.responses.map(
+                    response => ({
+                        ...response
+                    })
+                )
+        };
     }
 
     draw() {

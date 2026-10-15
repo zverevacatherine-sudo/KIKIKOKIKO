@@ -93,6 +93,14 @@ class Game {
         this.planets = [];
         this.active_house = null;
 
+        // Response tracking
+        this.responses = [];
+        this.prestudy_results = null;
+
+        // Preserve Prolific identifiers when present in the incoming URL.
+        this.incoming_participant_params =
+            this.getIncomingParticipantParams();
+
         // Input
         this.keys_pressed = {};
         this.mouse_x = 0;
@@ -251,6 +259,10 @@ class Game {
                 this.prestudy_completed =
                     true;
 
+                this.prestudy_results =
+                    this.prestudy_screen
+                        .get_results();
+
                 // Return silently to the menu.
                 this.state = "menu";
             } else if (
@@ -305,13 +317,17 @@ class Game {
 
 
         // Successful completion button.
+        // Build the Qualtrics URL here so all response data are included.
         if (
             this.scores.reached_planet &&
-            this.scores.handle_success_click(
+            pointInRect(
                 scaledX,
-                scaledY
+                scaledY,
+                this.scores
+                    .continue_study_rect
             )
         ) {
+            this.goToExperienceStudy();
             return;
         }
 
@@ -396,6 +412,17 @@ class Game {
                 result === "finished" &&
                 this.active_house
             ) {
+                const completedDepartmentId =
+                    this.active_house.dept_id;
+
+                this.responses.push({
+                    sectionId:
+                        completedDepartmentId,
+                    responses:
+                        this.test_screen
+                            .get_responses()
+                });
+
                 this.scores
                     .add_department_score(
                         this.test_screen
@@ -508,6 +535,181 @@ class Game {
     }
 
 
+    getIncomingParticipantParams() {
+        const currentParams =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const result = {};
+
+        [
+            "PROLIFIC_PID",
+            "STUDY_ID",
+            "SESSION_ID"
+        ].forEach(key => {
+            const value =
+                currentParams.get(key);
+
+            if (value) {
+                result[key] = value;
+            }
+        });
+
+        return result;
+    }
+
+
+    buildStudyData() {
+        const data = {
+            condition: "challenge"
+        };
+
+        // Pre Study: 3 content questions + separate attention check.
+        if (this.prestudy_results) {
+            data.prestudy_score =
+                this.prestudy_results
+                    .contentCorrect;
+
+            const preContent =
+                this.prestudy_results
+                    .responses
+                    .filter(
+                        response =>
+                            !response.attentionCheck
+                    );
+
+            preContent.forEach(
+                (response, index) => {
+                    const number = index + 1;
+                    data[`pre_q${number}`] =
+                        response.selectedLetter;
+                    data[`pre_q${number}_correct`] =
+                        response.correct ? 1 : 0;
+                }
+            );
+
+            const preAttention =
+                this.prestudy_results
+                    .responses
+                    .find(
+                        response =>
+                            response.attentionCheck
+                    );
+
+            if (preAttention) {
+                data.pre_attention =
+                    preAttention.selectedLetter;
+                data.pre_attention_correct =
+                    preAttention.correct ? 1 : 0;
+            }
+        }
+
+        // Main assessment: Department 1 = Q1-Q3, Department 2 = Q4-Q6, etc.
+        let mainAttention = null;
+
+        this.responses.forEach(
+            section => {
+                const sectionNumber =
+                    Number(section.sectionId);
+                let localQuestionIndex = 0;
+
+                section.responses.forEach(
+                    response => {
+                        if (response.attentionCheck) {
+                            mainAttention = response;
+                            return;
+                        }
+
+                        const globalQuestionNumber =
+                            (sectionNumber - 1) * 3 +
+                            localQuestionIndex + 1;
+
+                        data[`q${globalQuestionNumber}`] =
+                            response.selectedLetter;
+                        data[`q${globalQuestionNumber}_correct`] =
+                            response.correct ? 1 : 0;
+
+                        localQuestionIndex++;
+                    }
+                );
+            }
+        );
+
+        if (mainAttention) {
+            data.main_attention =
+                mainAttention.selectedLetter;
+            data.main_attention_correct =
+                mainAttention.correct ? 1 : 0;
+        }
+
+        // Reliable final score: always 0-15.
+        let recomputedTotal = 0;
+        for (let questionNumber = 1; questionNumber <= 15; questionNumber++) {
+            recomputedTotal +=
+                Number(data[`q${questionNumber}_correct`] || 0);
+        }
+        data.total_correct = recomputedTotal;
+
+        Object.entries(
+            this.incoming_participant_params
+        ).forEach(([key, value]) => {
+            data[key] = value;
+        });
+
+        return data;
+    }
+
+
+    buildExperienceStudyUrl() {
+        // Keep the Challenge Qualtrics destination already configured in scores.js.
+        const url =
+            new URL(
+                this.scores.experience_study_url
+            );
+
+        const data = this.buildStudyData();
+
+        Object.entries(data).forEach(
+            ([key, value]) => {
+                if (value !== undefined && value !== null) {
+                    url.searchParams.set(
+                        key,
+                        String(value)
+                    );
+                }
+            }
+        );
+
+        return url.toString();
+    }
+
+
+    goToExperienceStudy() {
+        const studyData =
+            this.buildStudyData();
+
+        const targetUrl =
+            this.buildExperienceStudyUrl();
+
+        console.log(
+            "Sending Challenge study data to Qualtrics:",
+            studyData
+        );
+
+        window.assessmentResult = {
+            ...studyData,
+            gameScoreDisplayed:
+                this.scores.total_correct_answers,
+            departmentResponses:
+                this.responses
+        };
+
+        window.location.href =
+            targetUrl;
+    }
+
+
     terminateParticipant(
         prolificCode = "C1F917Z4"
     ) {
@@ -565,6 +767,7 @@ class Game {
         this.scores
             .total_correct_answers = 0;
 
+        this.responses = [];
         this.active_house = null;
 
         // Music already started in Rules; continue it when the game begins.
